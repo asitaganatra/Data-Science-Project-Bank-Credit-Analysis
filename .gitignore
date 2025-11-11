@@ -7,12 +7,12 @@ __pycache__/
 *.pyc
 
 # Data files
-*.csv
+#*.csv
 
 # Saved Models
-*.joblib
-*.pkl
-*.h5
+#*.joblib
+#*.pkl
+#*.h5
 
 # OS / IDE specific
 .DS_Store
