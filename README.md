@@ -2,6 +2,8 @@
 
 A comprehensive data analysis and machine learning application for analyzing Indian bank credit data. This project provides various analytical tools including exploratory data analysis, predictive modeling, classification, clustering, and deep learning capabilities.
 
+##Streamlit app link: https://data-science-project-bank-credit-analysis-mqwysw9fnz39dulu4ta2.streamlit.app/
+
 ## Features
 
 1. **Main Dashboard**
@@ -157,8 +159,6 @@ To contribute to this project:
 2. Create a feature branch
 3. Make your changes
 4. Submit a pull request
-
-##Streamlit app link: https://data-science-project-bank-credit-analysis-mqwysw9fnz39dulu4ta2.streamlit.app/
 
 ## License
 
