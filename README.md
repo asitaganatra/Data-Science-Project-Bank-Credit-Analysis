@@ -158,6 +158,8 @@ To contribute to this project:
 3. Make your changes
 4. Submit a pull request
 
+##Streamlit app link: https://data-science-project-bank-credit-analysis-mqwysw9fnz39dulu4ta2.streamlit.app/
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
