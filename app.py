@@ -15,6 +15,23 @@ st.set_page_config(
     layout="wide"
 )
 
+# --- Deployment Detection ---
+def is_deployment_environment():
+    """Check if running in deployment (Streamlit Cloud, Docker, etc.)"""
+    return (
+        os.getenv("STREAMLIT_SERVER_HEADLESS") == "true"
+        or os.getenv("DOCKER_CONTAINER") == "true"
+        or "streamlit.app" in os.getenv("HOSTNAME", "")
+    )
+
+# Show deployment notice if needed
+deployment_mode = is_deployment_environment()
+if deployment_mode:
+    st.warning(
+        "⚠️ **Deployment Mode Detected**: Some local files may not be available. "
+        "For full functionality, consider running locally or uploading your data to this deployment."
+    )
+
 # --- Define a function to load the data ---
 @st.cache_data
 def load_data(filepath):
@@ -24,7 +41,17 @@ def load_data(filepath):
         return df
     except FileNotFoundError:
         st.error(f"Error: The file '{filepath}' was not found.")
-        st.info("Please make sure 'cleaned_bank_credit_data.csv' is in the same folder as 'app.py'")
+        if deployment_mode:
+            st.info(
+                "📁 **For Streamlit Cloud Deployment:**\n\n"
+                "1. Fork/clone the repository: https://github.com/asitaganatra/Data-Science-Project-Bank-Credit-Analysis\n"
+                "2. Deploy using Streamlit Cloud: https://streamlit.io/cloud\n"
+                "3. Connect your GitHub repository\n\n"
+                "**For Local Testing:**\n"
+                "Run: `streamlit run app.py` in your project directory"
+            )
+        else:
+            st.info("Please make sure 'cleaned_bank_credit_data.csv' is in the same folder as 'app.py'")
         return None
 
 # --- Define functions to load models ---
@@ -35,11 +62,13 @@ def load_model(filepath):
         model = joblib.load(filepath)
         return model
     except FileNotFoundError:
-        st.error(f"Error: Model file '{filepath}' not found.")
-        st.info("Please make sure your .joblib model files are in the same folder.")
+        if not deployment_mode:
+            st.error(f"Error: Model file '{filepath}' not found.")
+            st.info("Please make sure your .joblib model files are in the same folder.")
         return None
     except Exception as e:
-        st.error(f"An error occurred loading model {filepath}: {e}")
+        if not deployment_mode:
+            st.error(f"An error occurred loading model {filepath}: {e}")
         return None
 
 # --- Load the Data & Models ---
